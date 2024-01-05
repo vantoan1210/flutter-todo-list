@@ -8,7 +8,7 @@ class Firestore_Datasource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<bool> CreateUser(String email) async {
+  Future<bool> createUser(String email) async {
     try {
       await _firestore
           .collection('users')
@@ -21,7 +21,7 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> AddNote(String subtitle, String title, int image) async {
+  Future<bool> addNote(String subtitle, String title, int image) async {
     try {
       var uuid = Uuid().v4();
       DateTime data = new DateTime.now();
@@ -74,7 +74,7 @@ class Firestore_Datasource {
         .snapshots();
   }
 
-  Future<bool> isdone(String uuid, bool isDon) async {
+  Future<bool> isDone(String uuid, bool isDon) async {
     try {
       await _firestore
           .collection('users')
@@ -89,7 +89,7 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> Update_Note(
+  Future<bool> updateNote(
       String uuid, int image, String title, String subtitle) async {
     try {
       DateTime data = new DateTime.now();
@@ -111,7 +111,7 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> delet_note(String uuid) async {
+  Future<bool> deleteNote(String uuid) async {
     try {
       await _firestore
           .collection('users')

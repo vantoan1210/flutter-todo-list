@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
+import 'package:flutter_to_do_list/data/auth_data.dart';
 import 'package:flutter_to_do_list/screen/add_note_screen.dart';
 import 'package:flutter_to_do_list/widgets/stream_note.dart';
 
@@ -17,13 +18,34 @@ class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: null,
+        title: Text(
+          'To Do',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        actions: [
+          IconButton(
+              onPressed: () {
+                AuthenticationRemote().logout();
+              },
+              icon: Icon(
+                Icons.output,
+                color: Colors.black,
+                size: 32,
+              ))
+        ],
+      ),
+      resizeToAvoidBottomInset: true,
       backgroundColor: backgroundColors,
       floatingActionButton: Visibility(
         visible: show,
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Add_creen(),
+              builder: (context) => Add_screen(),
             ));
           },
           backgroundColor: custom_green,
@@ -47,15 +69,20 @@ class _Home_ScreenState extends State<Home_Screen> {
           },
           child: Column(
             children: [
-              Stream_note(false),
+              Expanded(child: Stream_note(false)),
               Text(
-                'isDone',
+                'Task Done ✓',
                 style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.shade500,
                     fontWeight: FontWeight.bold),
               ),
-              Stream_note(true),
+              Divider(
+                thickness: 2,
+                height: 10,
+                color: Colors.black,
+              ),
+              Expanded(child: Stream_note(true)),
             ],
           ),
         ),

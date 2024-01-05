@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
 import 'package:flutter_to_do_list/data/auth_data.dart';
+import 'package:flutter_to_do_list/screen/home.dart';
+import 'package:flutter_to_do_list/widgets/alert_dialog.dart';
 
 class LogIN_Screen extends StatefulWidget {
   final VoidCallback show;
@@ -43,11 +46,12 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
               SizedBox(height: 50),
               textfield(email, _focusNode1, 'Email', Icons.email),
               SizedBox(height: 10),
-              textfield(password, _focusNode2, 'Password', Icons.password),
+              textfield(password, _focusNode2, 'Password', Icons.password,
+                  isObscure: true),
               SizedBox(height: 8),
               account(),
               SizedBox(height: 20),
-              Login_bottom(),
+              Login_bottom(context),
             ],
           ),
         ),
@@ -81,12 +85,21 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
     );
   }
 
-  Widget Login_bottom() {
+  Widget Login_bottom(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
-        onTap: () {
-          AuthenticationRemote().login(email.text, password.text);
+        onTap: () async {
+          if (email.value.text == '' || password.value.text == '') {
+            showAlertDialog(context, 'Error', 'Email and password required');
+            return;
+          }
+          try {
+            await AuthenticationRemote().login(email.text, password.text);
+          } catch (_) {
+            showAlertDialog(context, 'Error', 'Invalid email or password');
+          }
+          ;
         },
         child: Container(
           alignment: Alignment.center,
@@ -110,7 +123,8 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
   }
 
   Widget textfield(TextEditingController _controller, FocusNode _focusNode,
-      String typeName, IconData iconss) {
+      String typeName, IconData iconss,
+      {bool isObscure = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
@@ -122,6 +136,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
           controller: _controller,
           focusNode: _focusNode,
           style: TextStyle(fontSize: 18, color: Colors.black),
+          obscureText: isObscure,
           decoration: InputDecoration(
               prefixIcon: Icon(
                 iconss,

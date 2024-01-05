@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
-import 'package:flutter_to_do_list/data/firestor.dart';
+import 'package:flutter_to_do_list/data/firestore.dart';
 
-class Add_creen extends StatefulWidget {
-  const Add_creen({super.key});
+class Add_screen extends StatefulWidget {
+  const Add_screen({super.key});
 
   @override
-  State<Add_creen> createState() => _Add_creenState();
+  State<Add_screen> createState() => _Add_creenState();
 }
 
-class _Add_creenState extends State<Add_creen> {
+class _Add_creenState extends State<Add_screen> {
   final title = TextEditingController();
   final subtitle = TextEditingController();
 
@@ -44,18 +44,18 @@ class _Add_creenState extends State<Add_creen> {
       children: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: custom_green,
+            backgroundColor: custom_green,
             minimumSize: Size(170, 48),
           ),
           onPressed: () {
-            Firestore_Datasource().AddNote(subtitle.text, title.text, indexx);
+            Firestore_Datasource().addNote(subtitle.text, title.text, indexx);
             Navigator.pop(context);
           },
-          child: Text('add task'),
+          child: Text('Add task'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.red,
+            backgroundColor: Colors.red,
             minimumSize: Size(170, 48),
           ),
           onPressed: () {

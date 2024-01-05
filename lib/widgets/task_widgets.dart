@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
-import 'package:flutter_to_do_list/data/firestor.dart';
+import 'package:flutter_to_do_list/data/firestore.dart';
 import 'package:flutter_to_do_list/model/notes_model.dart';
 import 'package:flutter_to_do_list/screen/edit_screen.dart';
 
@@ -64,7 +64,7 @@ class _Task_WidgetState extends State<Task_Widget> {
                               isDone = !isDone;
                             });
                             Firestore_Datasource()
-                                .isdone(widget._note.id, isDone);
+                                .isDone(widget._note.id, isDone);
                           },
                         )
                       ],

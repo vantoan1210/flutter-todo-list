@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
-import 'package:flutter_to_do_list/data/firestor.dart';
+import 'package:flutter_to_do_list/data/firestore.dart';
 import 'package:flutter_to_do_list/model/notes_model.dart';
 
 class Edit_Screen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _Edit_ScreenState extends State<Edit_Screen> {
             minimumSize: Size(170, 48),
           ),
           onPressed: () {
-            Firestore_Datasource().Update_Note(
+            Firestore_Datasource().updateNote(
                 widget._note.id, indexx, title!.text, subtitle!.text);
             Navigator.pop(context);
           },

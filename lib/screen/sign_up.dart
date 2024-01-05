@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/const/colors.dart';
 import 'package:flutter_to_do_list/data/auth_data.dart';
+import 'package:flutter_to_do_list/widgets/alert_dialog.dart';
 
 class SignUp_Screen extends StatefulWidget {
   final VoidCallback show;
@@ -92,9 +93,20 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
-        onTap: () {
-          AuthenticationRemote()
-              .register(email.text, password.text, PasswordConfirm.text);
+        onTap: () async {
+          if (email.value.text == '' ||
+              password.value.text == '' ||
+              PasswordConfirm.value.text == '') {
+            showAlertDialog(context, 'Error', 'All field are required');
+            return;
+          }
+          try {
+            await AuthenticationRemote()
+                .register(email.text, password.text, PasswordConfirm.text);
+          } catch (_) {
+            showAlertDialog(context, 'Something wrong!',
+                'Bad email format or password/password confirm mismatch');
+          }
         },
         child: Container(
           alignment: Alignment.center,
